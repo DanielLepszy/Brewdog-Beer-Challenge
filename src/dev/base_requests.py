@@ -7,7 +7,18 @@ class BaseRequests:
     def __init__(self):
         self.baseUrl = "https://api.punkapi.com/v2"
 
-    def get_all_beers(self,endpoint:str):
-         print(f'Debug - GET: {self.baseUrl}{endpoint}')
-         return requests.get(self.baseUrl+endpoint)
+    def get_all_beers(self):
+         full_url = self.baseUrl+'/beers'
+         print(f'\nDebug - GET All Beers: {full_url}')
+         return requests.get(full_url)
+         
+    def get_single_beer_by_id(self,id:int):
+        full_url = self.baseUrl+'/beers/'+ str(id)
+        print(f'Debug - GET Single Beer: {full_url}')
+        return requests.get(full_url)
+    
+    def get_random_beer(self):
+        full_url = self.baseUrl+"/beers/random"
+        print(f'Debug - GET Random Beer: {full_url}')
+        return requests.get(full_url)
          
