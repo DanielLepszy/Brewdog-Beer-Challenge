@@ -1,7 +1,7 @@
 import requests
 import json
 import pytest
-from src.dev.base_requests import BaseRequests
+from src.dev.base.punkapi_requests import BaseRequests
 
 # Pre-Arrange
 @pytest.fixture
@@ -51,6 +51,48 @@ def test_get_single_beer_for_no_existed_id(base):
 
     # Assert
     assert response.status_code ==  requests.codes.not_found, f'No beer found that matches the ID {id}. Current status code: {response.status_code}'
+
+# Comment: 
+# Scenario for non-id as endpoint. 
+@pytest.mark.smoke
+def test_get_single_beer_for_non_int_endpoint(base):
+
+    # Arrange 
+    id = '1x'
+
+    # Act
+    response=base.get_single_beer_by_id(id)
+
+    # Assert
+    assert response.status_code ==  requests.codes.bad_request, f'beerId must be a number and greater than 0. Current beerId:{id}, status code: {response.status_code}'
+
+# Comment: 
+# Scenario for id=0. 
+@pytest.mark.smoke
+def test_get_single_beer_for_id_zero(base):
+
+    # Arrange 
+    id = 0
+
+    # Act
+    response=base.get_single_beer_by_id(id)
+
+    # Assert
+    assert response.status_code ==  requests.codes.bad_request, f'beerId must be a number and greater than 0. Current beerId:{id}, status code: {response.status_code}'
+
+# Comment: 
+# Scenario for simple SQL Injection. 
+@pytest.mark.smoke
+def test_get_single_beer_for_id_zero(base):
+
+    # Arrange 
+    id = '4 OR 1=1'
+
+    # Act
+    response=base.get_single_beer_by_id(id)
+
+    # Assert
+    assert response.status_code ==  requests.codes.bad_request, f'beerId must be a number and greater than 0. Current beerId:{id}, status code: {response.status_code}'
 
 @pytest.mark.smoke
 def test_get_random_beer(base):

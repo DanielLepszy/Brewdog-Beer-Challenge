@@ -13,9 +13,9 @@ class BaseRequests:
          return requests.get(full_url)
          
     def get_single_beer_by_id(self,id:int):
-        full_url = self.baseUrl+'/beers/'+ str(id)
-        print(f'Debug - GET Single Beer: {full_url}')
-        return requests.get(full_url)
+            full_url = self.baseUrl+'/beers/'+ str(id)
+            print(f'Debug - GET Single Beer: {full_url}')
+            return requests.get(full_url)
     
     def get_random_beer(self):
         full_url = self.baseUrl+"/beers/random"
