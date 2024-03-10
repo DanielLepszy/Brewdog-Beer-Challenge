@@ -14,8 +14,10 @@ def test_single_beer(utils):
     # Arrange
     id = 1 
     # Act
-    response=utils.get_beer_by_id(id)
-    print(response)
+    # response=utils.get_beer_by_id(id)
+    response=utils.get_all_beers()
+    for r in response:
+        print(f"\n ID:{r}")
 
     # Assert
     # assert response.status_code ==  requests.codes.ok, f"Failed to get a successful response. Status code: {response.status_code}"

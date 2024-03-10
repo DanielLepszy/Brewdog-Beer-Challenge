@@ -23,11 +23,10 @@ class BeerModelInfo:
     food_pairing: list
     brewers_tips: str
     contributed_by: str
-    aa: str
 
     def set_value(data:dict,key:str):
           if(key in data):
-                return dict[key]
+                return data[key]
           else:
                 return None
     @classmethod
@@ -53,6 +52,6 @@ class BeerModelInfo:
                 ingredients=cls.set_value(data,"ingredients"),
                 food_pairing=cls.set_value(data,"food_pairing"),
                 brewers_tips=cls.set_value(data,"brewers_tips"),
-                contributed_by=cls.set_value(data,"contributed_by"),
+                contributed_by=cls.set_value(data,"contributed_by")
             )
  

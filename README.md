@@ -13,3 +13,4 @@ python3 -m pytest --cache-clear --capture=tee-sys -m Smoke
 # Run single test
 python3 -m pytest --cache-clear --capture=tee-sys test_beers.py
 
+python3 -m pytest --cache-clear --capture=tee-sys src/tests/single_beer_test.py

@@ -7,10 +7,10 @@ class BaseRequests:
     def __init__(self):
         self.baseUrl = "https://api.punkapi.com/v2"
 
-    def get_all_beers(self):
+    def get_beers(self,params:dict = {}):
          full_url = self.baseUrl+'/beers'
          print(f'\nDebug - GET All Beers: {full_url}')
-         return requests.get(full_url)
+         return requests.get(full_url,params)
          
     def get_single_beer_by_id(self,id:int):
             full_url = self.baseUrl+'/beers/'+ str(id)
