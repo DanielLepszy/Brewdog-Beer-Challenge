@@ -9,7 +9,7 @@ class BaseRequests:
 
     def get_beers(self,params:dict = {}):
          full_url = self.baseUrl+'/beers'
-         print(f'\nDebug - GET All Beers: {full_url}')
+         print(f'\nDebug - GET /Beers: {full_url} with params:{params}')
          return requests.get(full_url,params)
          
     def get_single_beer_by_id(self,id:int):
