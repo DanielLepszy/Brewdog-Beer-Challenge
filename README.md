@@ -14,33 +14,39 @@ All project dependencies are store in <b>requirement.txt</b> file
 ### On Docker :
 #### Build docker image from project root path:
 ```bash
-docker build --no-cache --progress=plain -t <image_name:tag> <path_to_dockerfile_directory>
+docker build --no-cache --progress=plain -t <image_name:tag> .
 ```
+During image build, all packages and dependencies are installed as well.  
 
 #### Run docker container from the image:
 ```bash
 docker run -it <image_name:tag>
 ```
-### Locally :
+### Locally (Optional) :
+In case any dependencies issue, please reinstall packages again:
 ```bash
 pip install --no-cache-dir -r requirements.txt
 ```
 
-## Run automation tests using pytest
+## Run automation tests using pytest from /app path
 #### Using markers :
 ```bash  
-python3 -m pytest --cache-clear --capture=tee-sys -m <marker_name> 
+python3 -m pytest --cache-clear -s --md-report --md-report-verbose=1 -m <marker_name> 
 ```
 Where marker_name has two value: 'api' or 'smoke'. 
 
 #### Using expression :
 ```bash
-python3 -m pytest --cache-clear --capture=tee-sys -k "<marker_name> and <test_method_name>"
+python3 -m pytest --cache-clear -s --md-report --md-report-verbose=1 -k "<marker_name> and <test_method_name>"
 ```
 ## Test Report
 
-#### Genrate test report in .html
-Run test with --html flag:
+#### Genrate test reports
+In pytest.ini you can find simple configuration for pytest report. To long story short, you do not need to attach any additional flags to generate test report. Run tests suite using previous commands and the test report will be generated automatically in pytest-report.txt file.
+
+To preview report, please use 'cat' method :
 ```bash
-python3 -m pytest --cache-clear --capture=tee-sys --html=<folder_name>/<report_name>.html -m <marker_name> 
+cat pytest-report.txt 
 ```
+
+To output test report in console please add --md-report --md-report-verbose=1 flags to your pytest command when you run tests. 

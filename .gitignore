@@ -163,4 +163,5 @@ cython_debug/
 .vscode/
 
 # Test automation reports
-report.html
+.html
+pytest-report.txt

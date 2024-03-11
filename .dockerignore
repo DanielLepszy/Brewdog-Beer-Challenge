@@ -87,3 +87,7 @@ venv/
 
 # VS Code
 .vscode/
+
+# Test Reports
+.html
+pytest-report.txt
