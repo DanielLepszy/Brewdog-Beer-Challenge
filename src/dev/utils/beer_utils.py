@@ -1,5 +1,6 @@
 from src.dev.base.punkapi_requests import BaseRequests 
 from src.dev.data_model.beer_model import BeerModelInfo 
+from datetime import datetime
 
 class BeersMethodUtils(BaseRequests):
     def __init__(self):
@@ -42,5 +43,8 @@ class BeersMethodUtils(BaseRequests):
         params = {"brewed_after": brewed_after}
         return self.get_all_beers(params)
 
+    def to_date_format(self,date_to_format:str, date_format:str) -> datetime:
+        return datetime.strptime(date_to_format, date_format)
 
+    
 

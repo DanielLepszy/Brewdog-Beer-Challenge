@@ -1,16 +1,46 @@
 # Brewdog-Beer-Challenge
-Abbax - Test Automation coding challenge 
+Test Automation coding challenge :muscle:
+## Pre-requirements 
+- Docker
+- Python 3.9
+- Pip
 
-# Active venv
-source .venv/bin/activate
+> :warning **No proxies configuration required**
 
-# Install depdendcies
-pip install -r requirements.txt
+## Dependencies 
+All project dependencies are store in <b>requirement.txt</b> file  
 
-# Run smoke tests
-python3 -m pytest --cache-clear --capture=tee-sys -m Smoke
+## Installation
+### On Docker :
+#### Build docker image from project root path:
+```bash
+docker build --no-cache --progress=plain -t <image_name:tag> <path_to_dockerfile_directory>
+```
 
-# Run single test
-python3 -m pytest --cache-clear --capture=tee-sys test_beers.py
+#### Run docker container from the image:
+```bash
+docker run -it <image_name:tag>
+```
+### Locally :
+```bash
+pip install --no-cache-dir -r requirements.txt
+```
 
-python3 -m pytest --cache-clear --capture=tee-sys src/tests/single_beer_test.py
+## Run automation tests using pytest
+#### Using markers :
+```bash  
+python3 -m pytest --cache-clear --capture=tee-sys -m <marker_name> 
+```
+Where marker_name has two value: 'api' or 'smoke'. 
+
+#### Using expression :
+```bash
+python3 -m pytest --cache-clear --capture=tee-sys -k "<marker_name> and <test_method_name>"
+```
+## Test Report
+
+#### Genrate test report in .html
+Run test with --html flag:
+```bash
+python3 -m pytest --cache-clear --capture=tee-sys --html=<folder_name>/<report_name>.html -m <marker_name> 
+```
