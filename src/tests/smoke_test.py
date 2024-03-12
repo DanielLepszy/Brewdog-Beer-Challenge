@@ -1,7 +1,7 @@
 import requests
 import json
 import pytest
-from src.dev.base.punkapi_requests import BaseRequests
+from src.dev.base.base_requests import BaseRequests
 
 # Pre-Arrange
 @pytest.fixture
