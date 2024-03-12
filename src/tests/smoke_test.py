@@ -14,7 +14,7 @@ def base():
 def test_get_all_beer(base):
 
     # Act
-    response=base.get_all_beers()
+    response=base.get_beers()
 
     # Assert
     assert response.status_code ==  requests.codes.ok, f"Failed to get a successful response. Status code: {response.status_code}"

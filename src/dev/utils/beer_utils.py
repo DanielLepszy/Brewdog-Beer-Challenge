@@ -1,50 +1,38 @@
-from src.dev.base.punkapi_requests import BaseRequests 
+from src.dev.base.base_requests import BaseRequests 
 from src.dev.data_model.beer_model import BeerModelInfo 
-from datetime import datetime
+from src.dev.utils.helpers import HelperMethods 
+from src.dev.utils.mappers import BeerModelMapper 
+import requests
+from requests.models import Response
+from requests.models import Response
 
-class BeersMethodUtils(BaseRequests):
+class BeersRequestUtils(BaseRequests,HelperMethods,BeerModelMapper):
     def __init__(self):
         super().__init__()
 
-    def get_beer_by_id(self,id:int) -> BeerModelInfo:
-        if(id>0):
-            json_data = self.get_single_beer_by_id(id).json()[0]
-            return BeerModelInfo.from_dict(json_data)
-    
-    def get_random_beer(self,id:int) -> BeerModelInfo:
-        json_data = self.get_single_beer_by_id(id).json()[0]
-        return BeerModelInfo.from_dict(json_data)
-    
-    def  get_all_beers_per_page(self,page_number:int,per_page:int,incoming_params:dict = {}) -> list[BeerModelInfo]:
-         beers_per_page:list[BeerModelInfo] = []
-         params = {"page":page_number, "per_page":per_page}
-         params.update(incoming_params)
-         json_data=self.get_beers(params).json()
-         for beer in json_data:
-            beers_per_page.append(BeerModelInfo.from_dict(beer))
+    def get_all_beers_per_page(self,params:dict = {}) -> Response:
+         return self.get_beers(params)
+        
+    def get_all_beers(self,params:dict = {}) -> list[Response]:
+        all_beers_response:list[Response] = []
+        beers_per_page_resp:Response = self.get_all_beers_per_page(params)
+   
+        if beers_per_page_resp.status_code != requests.codes.ok:
+            return [beers_per_page_resp]
+        elif beers_per_page_resp.status_code == requests.codes.ok and len(beers_per_page_resp.json()) > 0:
+            all_beers_response.append(beers_per_page_resp)
+            params["page"] += 1
 
-         return beers_per_page
+            while beers_per_page_resp.json():
+                beers_per_page_resp = self.get_all_beers_per_page(params)
+                if beers_per_page_resp.json() is not None and len(beers_per_page_resp.json()) > 0:
+                    all_beers_response.append(beers_per_page_resp)
+                    params["page"] += 1
+                else:
+                    break
 
-    def get_all_beers(self,params:dict = {}) -> list[BeerModelInfo]:
-        all_beers:list[BeerModelInfo] = []
-        page_number = 1
-        per_page = 80
-        beers_per_page = [0]
-
-        while beers_per_page:
-             beers_per_page = self.get_all_beers_per_page(page_number,per_page,params)
-             if beers_per_page:
-                all_beers.extend(beers_per_page)
-                page_number += 1
-             
-        return all_beers
+        return all_beers_response
+        
     
-    def get_beers_produced_after(self,brewed_after:str) -> list[BeerModelInfo]:
-        params = {"brewed_after": brewed_after}
+    def get_beers_produced_after(self,params:dict) -> list[Response]:
         return self.get_all_beers(params)
-
-    def to_date_format(self,date_to_format:str, date_format:str) -> datetime:
-        return datetime.strptime(date_to_format, date_format)
-
-    
-

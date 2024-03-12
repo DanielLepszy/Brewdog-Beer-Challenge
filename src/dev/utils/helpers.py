@@ -6,7 +6,7 @@ from src.dev.utils.mappers import BeerModelMapper
 
 class HelperMethods:
 
-    def gather_all_page_reponse_in_single_json(self,reposne_pages: list[Response]) -> list[dict]:
+    def merge_all_page_reponse_into_one_json(self,reposne_pages: list[Response]) -> list[dict]:
         json_beers_list: list[dict] = []
     
         for response in reposne_pages:
@@ -14,8 +14,8 @@ class HelperMethods:
 
         return json_beers_list
     
-    def get_all_beer_models_from_pages(self,reposne_pages: list[Response]) -> list[BeerModelInfo]:
-        json_data = self.gather_all_page_reponse_in_single_json(reposne_pages)
+    def map_beer_model_from_page_resp(self,reposne_pages: list[Response]) -> list[BeerModelInfo]:
+        json_data = self.merge_all_page_reponse_into_one_json(reposne_pages)
         all_gathered_beers:list[BeerModelInfo] = BeerModelMapper.map_json_objects_to_beer_models(self,json_data)
 
         return all_gathered_beers

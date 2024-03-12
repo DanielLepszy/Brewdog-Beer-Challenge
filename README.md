@@ -33,7 +33,7 @@ pip install --no-cache-dir -r requirements.txt
 ```bash  
 python3 -m pytest --cache-clear -s  -m <marker_name> 
 ```
-Where marker_name has two value: 'api' or 'smoke'. 
+Where marker_name is : 'api' or 'smoke' or 'additional' 
 
 #### Using expression :
 ```bash
@@ -52,3 +52,5 @@ cat pytest-report.txt
 To output test report in console:
 - disallow 'md_report_output' flag in pytest.ini  
 - keep 'md-report' and 'md-report-verbose=1' flags attached in pytest.ini 
+
+> Alternatively, I provided another report in .html. Please attach ' --html=report.html ' flag to your pytest commads.
