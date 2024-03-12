@@ -1,6 +1,6 @@
 from nrt_pytest_soft_asserts.soft_asserts import SoftAsserts
 import pytest
-from src.dev.utils.beer_utils import BeersMethodUtils
+from src.dev.utils.beer_utils import BeersRequestUtils
 from src.dev.data_model.beer_model import BeerModelInfo 
 from datetime import datetime
 
@@ -10,7 +10,7 @@ def soft_assert():
     return  SoftAsserts()
 @pytest.fixture(scope="module", autouse=True)
 def utils():
-    return BeersMethodUtils()
+    return BeersRequestUtils()
 @pytest.fixture(scope="module", autouse=True)
 def date_format():
     return "%m/%Y"
@@ -57,6 +57,7 @@ def test_if_abv_is_not_null(soft_assert,beers_produced_after_december):
 @pytest.mark.dependency(depends=["produced_beers_after_dec"])
 def test_if_abv_is_double(soft_assert,beers_produced_after_december):
 
+
     # Assert
     for beer in beers_produced_after_december:
         soft_assert.assert_true(type(beer.abv)== float, f"\nFor beerId {beer.id} - the abv attribute is not float. Expected: float, Result:{type(beer.abv)}")
@@ -77,12 +78,13 @@ def test_if_abv_is_double(soft_assert,beers_produced_after_december):
 @pytest.mark.api
 @pytest.mark.dependency(depends=["produced_beers_after_dec"])
 def test_if_abv_is_grater_than(soft_assert,beers_produced_after_december):
-
+    
     #Arrange
-    float_number = 4.0
+    supplied_number = 4.0
+
     # Assert
     for beer in beers_produced_after_december:
-        soft_assert.assert_true( beer.abv>float_number, f"\nFor beerId {beer.id} - the abv attribute is not grater than {float_number}. Result: {beer.abv}")
+        soft_assert.assert_true( beer.abv> supplied_number, f"\nFor beerId {beer.id} produced after December 2015 - the abv attribute is not grater than {supplied_number}. Result: {beer.abv}")
     
     soft_assert.assert_all()
 
@@ -107,3 +109,37 @@ def test_if_name_is_not_empty_string(soft_assert,beers_produced_after_december):
     soft_assert.assert_all()
 
 
+# - - - - - - ADDITIONAL TESTS - - - - - - - - 
+    
+@pytest.mark.additional
+def test_if_abv_gt_param_return_proper_response(soft_assert,utils):
+    
+    #Arrange
+    supplied_number = 4.0
+    brewed_after = "12/2015"
+
+    #Act 
+    beers:list[BeerModelInfo] = utils.get_beers_with_abv_gt_than(brewed_after,supplied_number)
+
+    # Assert
+    for beer in beers:
+        soft_assert.assert_true( beer.abv > supplied_number, f"\nFor beerId {beer.id} the abv attribute is not grater than {supplied_number}. Result: {beer.abv}")
+    
+    soft_assert.assert_all()
+
+
+@pytest.mark.additional
+def test_if_abv_lt_param_return_proper_response(soft_assert,utils):
+    
+    #Arrange
+    supplied_number = 4.0
+    brewed_after = "12/2015"
+
+    #Act 
+    beers:list[BeerModelInfo] = utils.get_beers_with_abv_lt_than(brewed_after,supplied_number)
+
+    # Assert
+    for beer in beers:
+        soft_assert.assert_true( beer.abv < supplied_number, f"\nFor beerId {beer.id} the abv attribute is not grater than {supplied_number}. Result: {beer.abv}")
+    
+    soft_assert.assert_all()

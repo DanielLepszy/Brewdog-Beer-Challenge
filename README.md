@@ -5,7 +5,7 @@ Test Automation coding challenge :muscle:
 - Python 3.9
 - Pip
 
-> :warning **No proxies configuration required**
+> :warning: **No proxies configuration required**
 
 ## Dependencies 
 All project dependencies are store in <b>requirement.txt</b> file  
@@ -31,13 +31,13 @@ pip install --no-cache-dir -r requirements.txt
 ## Run automation tests using pytest from /app path
 #### Using markers :
 ```bash  
-python3 -m pytest --cache-clear -s --md-report --md-report-verbose=1 -m <marker_name> 
+python3 -m pytest --cache-clear -s  -m <marker_name> 
 ```
 Where marker_name has two value: 'api' or 'smoke'. 
 
 #### Using expression :
 ```bash
-python3 -m pytest --cache-clear -s --md-report --md-report-verbose=1 -k "<marker_name> and <test_method_name>"
+python3 -m pytest --cache-clear -s  -k "<marker_name> and <test_method_name>"
 ```
 ## Test Report
 
@@ -49,4 +49,6 @@ To preview report, please use 'cat' method :
 cat pytest-report.txt 
 ```
 
-To output test report in console please add --md-report --md-report-verbose=1 flags to your pytest command when you run tests. 
+To output test report in console:
+- disallow 'md_report_output' flag in pytest.ini  
+- keep 'md-report' and 'md-report-verbose=1' flags attached in pytest.ini 
