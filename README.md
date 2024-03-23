@@ -54,3 +54,24 @@ To output test report in console:
 - keep 'md-report' and 'md-report-verbose=1' flags attached in pytest.ini 
 
 > Alternatively, I provided another report in .html. Please attach ' --html=report.html ' flag to your pytest commads.
+
+
+
+
+# Exercise: 
+
+## Brewdog Beer Challenge 
+In order to validate the release we need the following 4 tests.
+We want to validate that all the beer produced after December 2015 
+1. Has a valid ‘abv’
+• It must be a double 
+• It must not be null
+• It must not be an empty string 
+• It must be over 4.0 
+2. Has a valid ‘name’ for each beer 
+• It must not be null 
+• It must not be an empty string 
+3. Extra tests which you think should be included 
+Public API 
+The beer list can be accessed through the PUNK API: 
+https://punkapi.com/documentation/v2 
