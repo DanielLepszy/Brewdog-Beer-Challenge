@@ -1,0 +1,6 @@
+requests == 2.31.0
+pytest  == 8.0.2
+pytest-soft-assertions == 0.1.2
+nrt-pytest-soft-asserts == 1.0.7
+pytest-md-report == 0.5.1
+pytest-html == 4.1.1
